@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💙</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap');
+
+        /* --- GLOBAL & BACKGROUND --- */
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #050a1f; /* Deep night sky */
+        }
+
+        .background-blur {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('background.jpg') no-repeat center center/cover;
+            filter: blur(8px) brightness(0.6);
+            z-index: 0;
+        }
+
+        /* --- GLOWING MOON --- */
+        .moon {
+            position: absolute;
+            top: 10%; right: 10%;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, #ffffff, #b3d4ff);
+            border-radius: 50%;
+            box-shadow: 0 0 50px 20px rgba(179, 212, 255, 0.5), inset -15px -15px 30px rgba(0,0,0,0.2);
+            z-index: 1;
+            animation: pulseMoon 4s infinite alternate;
+        }
+
+        @keyframes pulseMoon {
+            0% { box-shadow: 0 0 50px 20px rgba(179, 212, 255, 0.4); }
+            100% { box-shadow: 0 0 70px 30px rgba(179, 212, 255, 0.7); }
+        }
+
+        /* --- FLOATING CHARACTERS --- */
+        .floating-stitch, .floating-angel {
+            position: absolute;
+            width: 150px;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-stitch {
+            top: 20%; left: 10%;
+        }
+        .floating-angel {
+            top: 15%; right: 25%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(-2deg); }
+        }
+
+        /* --- LANDING PAGE & BUTTON --- */
+        .landing-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 1s ease;
+        }
+
+        .landing-title {
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            text-shadow: 0 0 20px rgba(255,192,203, 0.8);
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .animated-button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .animated-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 25px rgba(255, 71, 87, 0.6);
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+        }
+
+        /* --- ENVELOPE & LETTER (GLASSMORPHISM) --- */
+        .letter-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 650px;
+            z-index: 5;
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass-letter {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .glass-letter::-webkit-scrollbar {
+            width: 8px;
+        }
+        .glass-letter::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .glass-letter::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+        }
+
+        .glass-letter::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('letter-bg.jpg') center/cover;
+            opacity: 0.2; 
+            z-index: -1;
+        }
+
+        .letter-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: justify;
+        }
+
+        .letter-highlight {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            text-align: center;
+            display: block;
+            margin: 15px 0;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .floating-photo {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid rgba(255,255,255,0.6);
+            margin-top: 25px;
+            animation: float 5s infinite;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- PARTICLES --- */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes shoot {
+            0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+            100% { transform: translate(100vw, 100vh) rotate(45deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="background-blur"></div>
+
+    <div class="moon"></div>
+    
+    <img src="stitch.png" class="floating-stitch" alt="Stitch" onerror="this.style.display='none'">
+    <img src="angel.png" class="floating-angel" alt="Angel" onerror="this.style.display='none'">
+
+    <div class="landing-container" id="landing">
+        <h1 class="landing-title">I have something for you ✨</h1>
+        <button class="animated-button" onclick="openMagic()">💌 Open Letter 💌</button>
+    </div>
+
+    <div class="letter-container" id="letter">
+        <div class="glass-letter">
+            <div class="letter-text">
+                <span class="letter-highlight">Hi love,</span><br>
+                
+                Thank you for todayyyyy. ❤️ It was almost a perfect day, mahal. Ang sarap ng food, and sobrang saya ko kasi ang dami nating time together ulit. Those moments with you always make me so happy.<br><br>
+                
+                May gusto lang sana akong sabihin, mahal. Medyo nalulungkot lang talaga ako tuwing nababanggit mo na baka malipat ka sa Section 2. Hindi naman dahil ayokong mangyari yung makakabuti para sa'yo, kasi tama ka naman—med school ito, at kailangan nating gawin kung ano yung makakatulong sa atin. Siguro hindi lang talaga ako sanay sa idea.<br><br>
+                
+                Ikaw na lang kasi yung comfort ko sa med school. Hindi na nga tayo magkatabi, tapos naiisip ko pa na baka magkaiba pa tayo ng section. I'm sorry, babe. Hindi ako kasing tibay mo emotionally. Sana maging katulad din kita balang araw.<br><br>
+                
+                Siguro kaya ko namang mag-isa kung wala lang nangyari nitong mga nakaraan. Pero sa ngayon, naiisip ko na mag-isa na lang ulit akong maiiwan sa room habang napapalibutan ng mga taong alam kong may ayaw sa akin. Hindi naman ako tumitigil na subukang ayusin yung friendships ko, kasi gusto ko talagang maging okay ang lahat. Pero minsan, hindi ko pa rin maiwasang matakot.<br><br>
+
+                Alam ko rin naman na hindi mo na kinakausap si Saff, at alam kong ginagawa mo ang best mo para maging panatag ako. Pero minsan, kapag naaalala kong magkatabi kayo, hindi ko mapigilan yung overthinking ko. Hindi ito dahil wala akong tiwala sa'yo. Siguro hindi pa lang talaga ako sanay. Minsan naiisip ko kasi na pwede mo silang balikan anytime kung gugustuhin mo, habang ako, parang dead end na yung mga taong dati kong masasandalan. Alam kong mali yung comparison na 'yon, pero gusto ko lang maging honest sa nararamdaman ko.<br><br>
+
+                Nahihiya nga akong sabihin ito sa'yo kasi alam kong school rules naman yun, at alam kong kung pwede lang, gugustuhin mo ring makasama ako o makatabi ulit. Kaya iniisip ko na baka ito na naman yung panibagong pagsubok na binibigay sa akin ni Lord—na matutong maging okay kahit mag-isa, at matutong huwag umasa sa presensya mo sa lahat ng oras.<br><br>
+
+                Pero alam mo yun, mahal? Minsan nasasabi ko na lang sa sarili ko, "Lord, napagdaanan ko na 'to noon. Sana kayanin ko ulit." Ang kinakatakot ko lang talaga ay yung pakiramdam na maiwan. Parang naiisip ko, "Lord, huwag naman sana pati si Thea mawala sa tabi ko." Alam kong hindi naman yun ang mangyayari, pero minsan ganun lang talaga mag-isip ang puso ko kapag natatakot.<br><br>
+
+                Thank you, babe, kasi lagi mo akong ini-spoil, lagi mo akong iniintindi, at lagi mo akong pinaparamdam na mahal mo ako. Hindi ko man laging ma-express nang maayos yung nararamdaman ko, gusto kong malaman mo na sobrang naa-appreciate kita.<br><br>
+
+                At kung minsan naiisip mong iiwan kita, gusto kong malaman mo na hindi yun ang gusto ko. Hangga't gusto mo pa akong kasama, hangga't pinipili mo pa rin ako, pipiliin din kita araw-araw. Ang tanging dahilan lang na maiisip kong mawala ako ay kung dumating yung araw na hindi mo na ako gustong makasama o may iba ka nang pipiliin. Pero habang nandito ka at mahal mo pa ako, wala akong balak bumitaw.<br><br>
+                
+                <span class="letter-highlight">I love you so much, mahal.<br>Thank you for making today so special. ❤️</span>
+            </div>
+            
+            <img src="us.jpg" alt="Us" class="floating-photo" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <script>
+        function openMagic() {
+            const music = document.getElementById('bg-music');
+            if (music) {
+                music.play().catch(error => console.log("Audio play failed:", error));
+            }
+            
+            const landing = document.getElementById('landing');
+            landing.style.opacity = '0';
+            
+            setTimeout(() => {
+                landing.style.display = 'none';
+                const letter = document.getElementById('letter');
+                letter.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 1000);
+        }
+
+        function createParticle(type) {
+            const el = document.createElement('div');
+            el.classList.add('particle');
+            
+            const startX = Math.random() * window.innerWidth;
+            el.style.left = startX + 'px';
+
+            if (type === 'star') {
+                el.innerHTML = '⭐';
+                el.style.top = (Math.random() * window.innerHeight) + 'px';
+                el.style.fontSize = (Math.random() * 10 + 5) + 'px';
+                el.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+            } 
+            else if (type === 'blossom') {
+                el.innerHTML = '🌸';
+                el.style.top = '-20px';
+                el.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                el.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+            }
+            else if (type === 'heart') {
+                el.innerHTML = ['❤️', '💖', '💗'][Math.floor(Math.random()*3)];
+                el.style.top = '-20px';
+                el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                el.style.animation = `fall ${Math.random() * 6 + 4}s linear infinite`;
+            }
+            else if (type === 'firefly') {
+                el.innerHTML = '✨';
+                el.style.top = (Math.random() * window.innerHeight) + 'px';
+                el.style.fontSize = (Math.random() * 15 + 5) + 'px';
+                el.style.animation = `float ${Math.random() * 4 + 3}s infinite alternate`;
+                el.style.filter = 'drop-shadow(0 0 5px yellow)';
+            }
+            else if (type === 'shooting-star') {
+                el.innerHTML = '🌠';
+                el.style.top = (Math.random() * window.innerHeight / 2) + 'px';
+                el.style.left = '-50px';
+                el.style.fontSize = '25px';
+                el.style.animation = `shoot ${Math.random() * 2 + 1}s linear`;
+                
+                setTimeout(() => el.remove(), 3000);
+            }
+
+            document.body.appendChild(el);
+        }
+
+        for(let i=0; i<30; i++) createParticle('star');
+        for(let i=0; i<15; i++) createParticle('firefly');
+        for(let i=0; i<15; i++) createParticle('blossom');
+        for(let i=0; i<10; i++) createParticle('heart');
+
+        setInterval(() => createParticle('shooting-star'), 4000);
+    </script>
+</body>
+</html>
